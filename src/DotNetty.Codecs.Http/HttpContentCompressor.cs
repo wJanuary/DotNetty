@@ -5,6 +5,7 @@ namespace DotNetty.Codecs.Http
 {
     using System;
     using System.Diagnostics.Contracts;
+    using System.Globalization;
     using DotNetty.Codecs.Compression;
     using DotNetty.Common.Utilities;
     using DotNetty.Transport.Channels;
@@ -93,7 +94,8 @@ namespace DotNetty.Codecs.Http
                 {
                     try
                     {
-                        q = float.Parse(encoding.ToString(equalsPos + 1));
+                        string s = encoding.ToString(equalsPos + 1);
+                        q = float.Parse(s, CultureInfo.InvariantCulture);
                     }
                     catch (FormatException)
                     {
