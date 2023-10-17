@@ -4,6 +4,7 @@
 namespace DotNetty.Transport.Channels
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Diagnostics.Contracts;
     using System.Net;
     using System.Reflection;
@@ -70,16 +71,22 @@ namespace DotNetty.Transport.Channels
 
         static readonly ConditionalWeakTable<Type, Tuple<SkipFlags>> SkipTable = new ConditionalWeakTable<Type, Tuple<SkipFlags>>();
 
+        
         protected static SkipFlags GetSkipPropagationFlags(IChannelHandler handler)
         {
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicMethods)]
+            Tuple<SkipFlags> CreateValueCallback(Type handlerType) => Tuple.Create(CalculateSkipPropagationFlags(handlerType));
+
             Tuple<SkipFlags> skipDirection = SkipTable.GetValue(
                 handler.GetType(),
-                handlerType => Tuple.Create(CalculateSkipPropagationFlags(handlerType)));
+                CreateValueCallback);
 
             return skipDirection?.Item1 ?? 0;
         }
 
-        protected static SkipFlags CalculateSkipPropagationFlags(Type handlerType)
+        protected static SkipFlags CalculateSkipPropagationFlags(
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicMethods)]
+            Type handlerType)
         {
             SkipFlags flags = 0;
 
@@ -163,14 +170,27 @@ namespace DotNetty.Transport.Channels
             return flags;
         }
 
-        protected static bool IsSkippable(Type handlerType, string methodName) => IsSkippable(handlerType, methodName, Type.EmptyTypes);
+        protected static bool IsSkippable(
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicMethods)]
+            Type handlerType,
+            string methodName) => IsSkippable(handlerType, methodName, Type.EmptyTypes);
 
-        protected static bool IsSkippable(Type handlerType, string methodName, params Type[] paramTypes)
+        protected static bool IsSkippable(
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicMethods)] Type handlerType,
+            string methodName, params Type[] paramTypes)
         {
             var newParamTypes = new Type[paramTypes.Length + 1];
             newParamTypes[0] = typeof(IChannelHandlerContext);
             Array.Copy(paramTypes, 0, newParamTypes, 1, paramTypes.Length);
-            return handlerType.GetMethod(methodName, newParamTypes).GetCustomAttribute<SkipAttribute>(false) != null;
+            return handlerType.GetMethod(methodName, newParamTypes)!.GetCustomAttribute<SkipAttribute>(false) != null;
+        }
+        
+        protected static bool IsSkippable(
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicMethods)] Type handlerType,
+            string methodName, Type singleType)
+        {
+            Type[] newParamTypes = { typeof(IChannelHandlerContext), singleType };
+            return handlerType.GetMethod(methodName, newParamTypes)!.GetCustomAttribute<SkipAttribute>(false) != null;
         }
 
         internal volatile AbstractChannelHandlerContext Next;
