@@ -138,6 +138,11 @@ namespace DotNetty.Common.Utilities
                 return this.ContentEquals(seq);
             }
 
+            if (obj is string s)
+            {
+                return s.Equals(this.value);
+            }
+
             return false;
         }
 

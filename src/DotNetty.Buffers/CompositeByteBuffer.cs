@@ -928,6 +928,30 @@ namespace DotNetty.Buffers
             return this;
         }
 
+        public override IByteBuffer GetBytes(int index, Span<byte> destination, int dstIndex, int length)
+        {
+            this.CheckDstIndex(index, length, dstIndex, destination.Length);
+            if (length == 0)
+            {
+                return this;
+            }
+
+            int i = this.ToComponentIndex(index);
+            while (length > 0)
+            {
+                ComponentEntry c = this.components[i];
+                IByteBuffer s = c.Buffer;
+                int adjustment = c.Offset;
+                int localLength = Math.Min(length, s.Capacity - (index - adjustment));
+                s.GetBytes(index - adjustment, destination, dstIndex, localLength);
+                index += localLength;
+                dstIndex += localLength;
+                length -= localLength;
+                i++;
+            }
+            return this;
+        }
+
         public override IByteBuffer GetBytes(int index, Stream destination, int length)
         {
             this.CheckIndex(index, length);
@@ -1094,6 +1118,30 @@ namespace DotNetty.Buffers
         }
 
         public override IByteBuffer SetBytes(int index, byte[] src, int srcIndex, int length)
+        {
+            this.CheckSrcIndex(index, length, srcIndex, src.Length);
+            if (length == 0)
+            {
+                return this;
+            }
+
+            int i = this.ToComponentIndex(index);
+            while (length > 0)
+            {
+                ComponentEntry c = this.components[i];
+                IByteBuffer s = c.Buffer;
+                int adjustment = c.Offset;
+                int localLength = Math.Min(length, s.Capacity - (index - adjustment));
+                s.SetBytes(index - adjustment, src, srcIndex, localLength);
+                index += localLength;
+                srcIndex += localLength;
+                length -= localLength;
+                i++;
+            }
+            return this;
+        }
+
+        public override IByteBuffer SetBytes(int index, Span<byte> src, int srcIndex, int length)
         {
             this.CheckSrcIndex(index, length, srcIndex, src.Length);
             if (length == 0)

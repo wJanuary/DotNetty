@@ -91,6 +91,8 @@ namespace DotNetty.Buffers.Tests
 
             public override IByteBuffer GetBytes(int index, IByteBuffer destination, int dstIndex, int length) => throw new NotSupportedException();
 
+            public override IByteBuffer GetBytes(int index, Span<byte> destination, int dstIndex, int length) => throw new NotSupportedException();
+
             public override IByteBuffer GetBytes(int index, Stream destination, int length) => throw new NotSupportedException();
 
             protected internal override void _SetByte(int index, int value) => throw new NotSupportedException();
@@ -112,6 +114,8 @@ namespace DotNetty.Buffers.Tests
             protected internal override void _SetLongLE(int index, long value) => throw new NotSupportedException();
 
             public override IByteBuffer SetBytes(int index, IByteBuffer src, int srcIndex, int length) => throw new NotSupportedException();
+
+            public override IByteBuffer SetBytes(int index, Span<byte> src, int srcIndex, int length) => throw new NotSupportedException();
 
             public override Task<int> SetBytesAsync(int index, Stream src, int length, CancellationToken cancellationToken) => throw new NotSupportedException();
 

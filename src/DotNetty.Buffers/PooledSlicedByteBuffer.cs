@@ -177,6 +177,13 @@ namespace DotNetty.Buffers
             return this;
         }
 
+        public override IByteBuffer GetBytes(int index, Span<byte> destination, int dstIndex, int length)
+        {
+            this.CheckIndex0(index, length);
+            this.Unwrap().GetBytes(this.Idx(index), destination, dstIndex, length);
+            return this;
+        }
+
         public override IByteBuffer SetByte(int index, int value)
         {
             this.CheckIndex0(index, 1);
@@ -259,6 +266,13 @@ namespace DotNetty.Buffers
         protected internal override void _SetLongLE(int index, long value) => this.UnwrapCore()._SetLongLE(this.Idx(index), value);
 
         public override IByteBuffer SetBytes(int index, byte[] src, int srcIndex, int length)
+        {
+            this.CheckIndex0(index, length);
+            this.Unwrap().SetBytes(this.Idx(index), src, srcIndex, length);
+            return this;
+        }
+
+        public override IByteBuffer SetBytes(int index, Span<byte> src, int srcIndex, int length)
         {
             this.CheckIndex0(index, length);
             this.Unwrap().SetBytes(this.Idx(index), src, srcIndex, length);

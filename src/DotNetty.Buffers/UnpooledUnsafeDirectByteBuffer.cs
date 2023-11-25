@@ -216,6 +216,14 @@ namespace DotNetty.Buffers
             return this;
         }
 
+        public override IByteBuffer GetBytes(int index, Span<byte> destination, int dstIndex, int length)
+        {
+            this.CheckIndex(index, length);
+            fixed (byte* addr = &this.Addr(index))
+                UnsafeByteBufferUtil.GetBytes(this, addr, index, destination, dstIndex, length);
+            return this;
+        }
+
         protected internal override void _SetByte(int index, int value) => this.buffer[index] = unchecked((byte)value);
 
         protected internal override void _SetShort(int index, int value)
@@ -275,6 +283,17 @@ namespace DotNetty.Buffers
         }
 
         public override IByteBuffer SetBytes(int index, byte[] src, int srcIndex, int length)
+        {
+            this.CheckIndex(index, length);
+            if (length != 0)
+            {
+                fixed (byte* addr = &this.Addr(index))
+                    UnsafeByteBufferUtil.SetBytes(this, addr, index, src, srcIndex, length);
+            }
+            return this;
+        }
+
+        public override IByteBuffer SetBytes(int index, Span<byte> src, int srcIndex, int length)
         {
             this.CheckIndex(index, length);
             if (length != 0)

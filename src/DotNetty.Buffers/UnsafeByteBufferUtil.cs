@@ -314,6 +314,20 @@ namespace DotNetty.Buffers
                 PlatformDependent.CopyMemory(addr, dst, dstIndex, length);
             }
         }
+        
+        internal static void GetBytes(AbstractByteBuffer buf, byte* addr, int index, Span<byte> dst, int dstIndex, int length)
+        {
+            Contract.Requires(dst != null);
+
+            if (MathUtil.IsOutOfBounds(dstIndex, length, dst.Length))
+            {
+                ThrowHelper.ThrowIndexOutOfRangeException_DstIndex(dstIndex);
+            }
+            if (length != 0)
+            {
+                PlatformDependent.CopyMemory(addr, dst, dstIndex, length);
+            }
+        }
 
         internal static void SetBytes(AbstractByteBuffer buf, byte* addr, int index, IByteBuffer src, int srcIndex, int length)
         {
@@ -355,6 +369,9 @@ namespace DotNetty.Buffers
         // No need to check length zero, the calling method already done it
         internal static void SetBytes(AbstractByteBuffer buf, byte* addr, int index, byte[] src, int srcIndex, int length) =>
                 PlatformDependent.CopyMemory(src, srcIndex, addr, length);
+        
+        internal static void SetBytes(AbstractByteBuffer buf, byte* addr, int index, Span<byte> src, int srcIndex, int length) =>
+            PlatformDependent.CopyMemory(src, srcIndex, addr, length);
 
         internal static void GetBytes(AbstractByteBuffer buf, byte* addr, int index, Stream output, int length)
         {

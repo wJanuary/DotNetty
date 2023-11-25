@@ -62,6 +62,13 @@ namespace DotNetty.Buffers
             return this;
         }
 
+        public override IByteBuffer GetBytes(int index, Span<byte> destination, int dstIndex, int length)
+        {
+            this.CheckDstIndex(index, length, dstIndex, destination.Length);
+            PlatformDependent.CopyMemory(this.Memory, this.Idx(index), destination, dstIndex, length);
+            return this;
+        }
+
         public override IByteBuffer GetBytes(int index, Stream destination, int length)
         {
             this.CheckIndex(index, length);
@@ -98,6 +105,13 @@ namespace DotNetty.Buffers
             {
                 src.GetBytes(srcIndex, this.Memory, this.Idx(index), length);
             }
+            return this;
+        }
+
+        public override IByteBuffer SetBytes(int index, Span<byte> src, int srcIndex, int length)
+        {
+            this.CheckSrcIndex(index, length, srcIndex, src.Length);
+            PlatformDependent.CopyMemory(src, srcIndex, this.Memory, this.Idx(index), length);
             return this;
         }
 

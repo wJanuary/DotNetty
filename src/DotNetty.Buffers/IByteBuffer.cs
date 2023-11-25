@@ -454,6 +454,9 @@ namespace DotNetty.Buffers
         ///     <c>index + 1</c> greater than <see cref="Capacity" />
         /// </exception>
         IByteBuffer GetBytes(int index, byte[] destination);
+        
+        IByteBuffer GetBytes(int index, Span<byte> destination);
+        
 
         /// <summary>
         ///     Transfers this buffers data to the specified <paramref name="destination" /> buffer starting at the specified
@@ -464,6 +467,8 @@ namespace DotNetty.Buffers
         ///     <c>index + 1</c> greater than <see cref="Capacity" />
         /// </exception>
         IByteBuffer GetBytes(int index, byte[] destination, int dstIndex, int length);
+        
+        IByteBuffer GetBytes(int index, Span<byte> destination, int dstIndex, int length);
 
         /// <summary>
         ///     Transfers this buffer's data to the specified stream starting at the
@@ -740,6 +745,8 @@ namespace DotNetty.Buffers
         ///     <c><paramref name="index"/> + <paramref name="src"/>.Length</c> greater than <see cref="Capacity" />
         /// </exception>
         IByteBuffer SetBytes(int index, byte[] src);
+        
+        IByteBuffer SetBytes(int index, Span<byte> src);
 
         /// <summary>
         ///     Transfers the <paramref name="src" /> byte buffer's contents starting at the specified absolute <paramref name="index" />.
@@ -753,6 +760,8 @@ namespace DotNetty.Buffers
         ///     <c><paramref name="srcIndex"/> + <paramref name="length"/></c> greater than <c><paramref name="src" />.Length</c>
         /// </exception>
         IByteBuffer SetBytes(int index, byte[] src, int srcIndex, int length);
+        
+        IByteBuffer SetBytes(int index, Span<byte> src, int srcIndex, int length);
 
         /// <summary>
         ///     Transfers the content of the specified source stream to this buffer
@@ -975,6 +984,10 @@ namespace DotNetty.Buffers
         IByteBuffer ReadBytes(byte[] destination);
 
         IByteBuffer ReadBytes(byte[] destination, int dstIndex, int length);
+        
+        IByteBuffer ReadBytes(Span<byte> destination);
+
+        IByteBuffer ReadBytes(Span<byte> destination, int dstIndex, int length);
 
         IByteBuffer ReadBytes(Stream destination, int length);
 
@@ -1034,10 +1047,15 @@ namespace DotNetty.Buffers
         IByteBuffer WriteBytes(IByteBuffer src, int length);
 
         IByteBuffer WriteBytes(IByteBuffer src, int srcIndex, int length);
+        
 
         IByteBuffer WriteBytes(byte[] src);
 
         IByteBuffer WriteBytes(byte[] src, int srcIndex, int length);
+
+        IByteBuffer WriteBytes(Span<byte> src);
+        
+        IByteBuffer WriteBytes(Span<byte> src, int srcIndex, int length);
 
         /// <summary>
         ///     Returns the maximum <see cref="ArraySegment{T}" /> of <see cref="Byte" /> that this buffer holds. Note that

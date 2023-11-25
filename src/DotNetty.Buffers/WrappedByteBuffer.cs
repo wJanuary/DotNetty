@@ -198,9 +198,21 @@ namespace DotNetty.Buffers
             return this;
         }
 
+        public IByteBuffer GetBytes(int index, Span<byte> destination)
+        {
+            this.Buf.GetBytes(index, destination);
+            return this;
+        }
+
         public virtual IByteBuffer GetBytes(int index, byte[] dst, int dstIndex, int length)
         {
             this.Buf.GetBytes(index, dst, dstIndex, length);
+            return this;
+        }
+
+        public IByteBuffer GetBytes(int index, Span<byte> destination, int dstIndex, int length)
+        {
+            this.Buf.GetBytes(index, destination, dstIndex, length);
             return this;
         }
 
@@ -336,7 +348,19 @@ namespace DotNetty.Buffers
             return this;
         }
 
+        public IByteBuffer SetBytes(int index, Span<byte> src)
+        {
+            this.Buf.SetBytes(index, src);
+            return this;
+        }
+
         public virtual IByteBuffer SetBytes(int index, byte[] src, int srcIndex, int length)
+        {
+            this.Buf.SetBytes(index, src, srcIndex, length);
+            return this;
+        }
+
+        public IByteBuffer SetBytes(int index, Span<byte> src, int srcIndex, int length)
         {
             this.Buf.SetBytes(index, src, srcIndex, length);
             return this;
@@ -431,6 +455,18 @@ namespace DotNetty.Buffers
         public virtual IByteBuffer ReadBytes(byte[] dst, int dstIndex, int length)
         {
             this.Buf.ReadBytes(dst, dstIndex, length);
+            return this;
+        }
+
+        public IByteBuffer ReadBytes(Span<byte> destination)
+        {
+            this.Buf.ReadBytes(destination);
+            return this;
+        }
+
+        public IByteBuffer ReadBytes(Span<byte> destination, int dstIndex, int length)
+        {
+            this.Buf.ReadBytes(destination, dstIndex, length);
             return this;
         }
 
@@ -569,6 +605,18 @@ namespace DotNetty.Buffers
         }
 
         public virtual IByteBuffer WriteBytes(byte[] src, int srcIndex, int length)
+        {
+            this.Buf.WriteBytes(src, srcIndex, length);
+            return this;
+        }
+
+        public IByteBuffer WriteBytes(Span<byte> src)
+        {
+            this.Buf.WriteBytes(src);
+            return this;
+        }
+
+        public IByteBuffer WriteBytes(Span<byte> src, int srcIndex, int length)
         {
             this.Buf.WriteBytes(src, srcIndex, length);
             return this;

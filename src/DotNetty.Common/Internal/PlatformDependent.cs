@@ -53,9 +53,25 @@ namespace DotNetty.Common.Internal
                 return true;
             }
 
+            var span = new ReadOnlySpan<byte>(bytes1, startPos1, length);
+            var span2 = new ReadOnlySpan<byte>(bytes2, startPos2, bytes2.Length - startPos2);
+            return span.SequenceEqual(span2);
+
             fixed (byte* array1 = &bytes1[startPos1])
                 fixed (byte* array2 = &bytes2[startPos2])
                     return PlatformDependent0.ByteArrayEquals(array1, array2, length);
+        }
+        
+        public static unsafe bool ByteArrayEqualsPtr(byte[] bytes1, int startPos1, byte[] bytes2, int startPos2, int length)
+        {
+            if (length <= 0)
+            {
+                return true;
+            }
+
+            fixed (byte* array1 = &bytes1[startPos1])
+            fixed (byte* array2 = &bytes2[startPos2])
+                return PlatformDependent0.ByteArrayEquals(array1, array2, length);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -228,6 +244,22 @@ namespace DotNetty.Common.Internal
                 Unsafe.CopyBlockUnaligned(ref dst[dstIndex], ref src[srcIndex], unchecked((uint)length));
             }
         }
+        
+        public static void CopyMemory(Span<byte> src, int srcIndex, byte[] dst, int dstIndex, int length)
+        {
+            if (length > 0)
+            {
+                src.Slice(srcIndex, length).CopyTo(dst.AsSpan(dstIndex));
+            }
+        }
+        
+        public static void CopyMemory(byte[] src, int srcIndex, Span<byte> dst, int dstIndex, int length)
+        {
+            if (length > 0)
+            {
+                Unsafe.CopyBlockUnaligned(ref dst[dstIndex], ref src[srcIndex], unchecked((uint)length));
+            }
+        }
 
         public static unsafe void CopyMemory(byte* src, byte* dst, int length)
         {
@@ -245,8 +277,26 @@ namespace DotNetty.Common.Internal
                     Unsafe.CopyBlockUnaligned(destination, src, unchecked((uint)length));
             }
         }
+        
+        public static unsafe void CopyMemory(byte* src, Span<byte> dst, int dstIndex, int length)
+        {
+            if (length > 0)
+            {
+                fixed (byte* destination = &dst[dstIndex])
+                    Unsafe.CopyBlockUnaligned(destination, src, unchecked((uint)length));
+            }
+        }
 
         public static unsafe void CopyMemory(byte[] src, int srcIndex, byte* dst, int length)
+        {
+            if (length > 0)
+            {
+                fixed (byte* source = &src[srcIndex])
+                    Unsafe.CopyBlockUnaligned(dst, source, unchecked((uint)length));
+            }
+        }
+        
+        public static unsafe void CopyMemory(Span<byte> src, int srcIndex, byte* dst, int length)
         {
             if (length > 0)
             {

@@ -152,7 +152,11 @@ namespace DotNetty.Buffers
 
         public IByteBuffer GetBytes(int index, byte[] destination) => this.CheckIndex(index, destination.Length);
 
+        public IByteBuffer GetBytes(int index, Span<byte> destination) => this.CheckIndex(index, destination.Length);
+
         public IByteBuffer GetBytes(int index, byte[] destination, int dstIndex, int length) => this.CheckIndex(index, length);
+
+        public IByteBuffer GetBytes(int index, Span<byte> destination, int dstIndex, int length) => this.CheckIndex(index, length);
 
         public IByteBuffer GetBytes(int index, Stream destination, int length) => this.CheckIndex(index, length);
 
@@ -214,7 +218,11 @@ namespace DotNetty.Buffers
 
         public IByteBuffer SetBytes(int index, byte[] src) => this.CheckIndex(index, src.Length);
 
+        public IByteBuffer SetBytes(int index, Span<byte> src) => this.CheckIndex(index, src.Length);
+
         public IByteBuffer SetBytes(int index, byte[] src, int srcIndex, int length) => this.CheckIndex(index, length);
+
+        public IByteBuffer SetBytes(int index, Span<byte> src, int srcIndex, int length) => this.CheckIndex(index, length);
 
         public Task<int> SetBytesAsync(int index, Stream src, int length, CancellationToken cancellationToken)
         {
@@ -281,6 +289,10 @@ namespace DotNetty.Buffers
         public IByteBuffer ReadBytes(byte[] destination) => this.CheckLength(destination.Length);
 
         public IByteBuffer ReadBytes(byte[] destination, int dstIndex, int length) => this.CheckLength(length);
+
+        public IByteBuffer ReadBytes(Span<byte> destination) => this.CheckLength(destination.Length);
+
+        public IByteBuffer ReadBytes(Span<byte> destination, int dstIndex, int length) => this.CheckLength(length);
 
         public IByteBuffer ReadBytes(Stream destination, int length) => this.CheckLength(length);
 
@@ -349,6 +361,10 @@ namespace DotNetty.Buffers
         public IByteBuffer WriteBytes(byte[] src) => this.CheckLength(src.Length);
 
         public IByteBuffer WriteBytes(byte[] src, int srcIndex, int length) => this.CheckLength(length);
+
+        public IByteBuffer WriteBytes(Span<byte> src) => this.CheckLength(src.Length);
+
+        public IByteBuffer WriteBytes(Span<byte> src, int srcIndex, int length) => this.CheckLength(length);
 
         public IByteBuffer WriteZero(int length) => this.CheckLength(length);
 

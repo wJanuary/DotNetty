@@ -6,7 +6,7 @@ namespace DotNetty.Common
     using System;
     using System.Diagnostics;
 
-    public struct PreciseTimeSpan : IComparable<PreciseTimeSpan>, IEquatable<PreciseTimeSpan>
+    public readonly struct PreciseTimeSpan : IComparable<PreciseTimeSpan>, IEquatable<PreciseTimeSpan>
     {
         static readonly long StartTime = Stopwatch.GetTimestamp();
         static readonly double PrecisionRatio = (double)Stopwatch.Frequency / TimeSpan.TicksPerSecond;
@@ -46,9 +46,9 @@ namespace DotNetty.Common
 
         public override bool Equals(object obj)
         {
-            if (obj is PreciseTimeSpan)
+            if (obj is PreciseTimeSpan span)
             {
-                return this.Equals((PreciseTimeSpan)obj);
+                return this.Equals(span);
             }
 
             return false;

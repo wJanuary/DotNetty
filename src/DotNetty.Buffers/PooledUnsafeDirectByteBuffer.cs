@@ -83,6 +83,13 @@ namespace DotNetty.Buffers
             return this;
         }
 
+        public override IByteBuffer GetBytes(int index, Span<byte> destination, int dstIndex, int length)
+        {
+            this.CheckIndex(index, length);
+            UnsafeByteBufferUtil.GetBytes(this, this.Addr(index), index, destination, dstIndex, length);
+            return this;
+        }
+
         public override IByteBuffer GetBytes(int index, Stream output, int length)
         {
             UnsafeByteBufferUtil.GetBytes(this, this.Addr(index), index, output, length);
@@ -115,6 +122,13 @@ namespace DotNetty.Buffers
         }
 
         public override IByteBuffer SetBytes(int index, byte[] src, int srcIndex, int length)
+        {
+            this.CheckIndex(index, length);
+            UnsafeByteBufferUtil.SetBytes(this, this.Addr(index), index, src, srcIndex, length);
+            return this;
+        }
+
+        public override IByteBuffer SetBytes(int index, Span<byte> src, int srcIndex, int length)
         {
             this.CheckIndex(index, length);
             UnsafeByteBufferUtil.SetBytes(this, this.Addr(index), index, src, srcIndex, length);

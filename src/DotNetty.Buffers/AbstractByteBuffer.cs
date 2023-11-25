@@ -435,8 +435,16 @@ namespace DotNetty.Buffers
             this.GetBytes(index, destination, 0, destination.Length);
             return this;
         }
+        
+        public virtual IByteBuffer GetBytes(int index, Span<byte> destination)
+        {
+            this.GetBytes(index, destination, 0, destination.Length);
+            return this;
+        }
 
         public abstract IByteBuffer GetBytes(int index, byte[] destination, int dstIndex, int length);
+        
+        public abstract IByteBuffer GetBytes(int index, Span<byte> destination, int dstIndex, int length);
 
         public virtual IByteBuffer GetBytes(int index, IByteBuffer destination)
         {
@@ -674,7 +682,15 @@ namespace DotNetty.Buffers
             return this;
         }
 
+        public IByteBuffer SetBytes(int index, Span<byte> src)
+        {
+            this.SetBytes(index, src, 0, src.Length);
+            return this;
+        }
+
         public abstract IByteBuffer SetBytes(int index, byte[] src, int srcIndex, int length);
+
+        public abstract IByteBuffer SetBytes(int index, Span<byte> src, int srcIndex, int length);
 
         public virtual IByteBuffer SetBytes(int index, IByteBuffer src)
         {
@@ -1004,6 +1020,20 @@ namespace DotNetty.Buffers
             return this;
         }
 
+        public IByteBuffer ReadBytes(Span<byte> destination)
+        {
+            this.ReadBytes(destination, 0, destination.Length);
+            return this;
+        }
+
+        public IByteBuffer ReadBytes(Span<byte> destination, int dstIndex, int length)
+        {
+            this.CheckReadableBytes(length);
+            this.GetBytes(this.readerIndex, destination, dstIndex, length);
+            this.readerIndex += length;
+            return this;
+        }
+
         public virtual IByteBuffer ReadBytes(byte[] dst)
         {
             this.ReadBytes(dst, 0, dst.Length);
@@ -1166,6 +1196,20 @@ namespace DotNetty.Buffers
         public IByteBuffer WriteDoubleLE(double value) => this.WriteLongLE(BitConverter.DoubleToInt64Bits(value));
 
         public virtual IByteBuffer WriteBytes(byte[] src, int srcIndex, int length)
+        {
+            this.EnsureWritable(length);
+            this.SetBytes(this.writerIndex, src, srcIndex, length);
+            this.writerIndex += length;
+            return this;
+        }
+
+        public IByteBuffer WriteBytes(Span<byte> src)
+        {
+            this.WriteBytes(src, 0, src.Length);
+            return this;
+        }
+
+        public IByteBuffer WriteBytes(Span<byte> src, int srcIndex, int length)
         {
             this.EnsureWritable(length);
             this.SetBytes(this.writerIndex, src, srcIndex, length);

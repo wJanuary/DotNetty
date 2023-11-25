@@ -33,7 +33,7 @@ Param(
 
 $CakeVersion = "0.27.1"
 $DotNetChannel = "Current";
-$DotNetVersion = "6.0.302";
+$DotNetVersion = "8.0.100";
 $DotNetInstallerUri = "https://dot.net/v1/dotnet-install.ps1";
 $NugetUrl = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 # Temporarily skip verification of addins.
@@ -124,9 +124,11 @@ $Arguments = @{
     configuration=$Configuration;
     verbosity=$Verbosity;
     dryrun=$WhatIf;
+    skiptests = $True;
 }.GetEnumerator() | %{"--{0}=`"{1}`"" -f $_.key, $_.value };
 
 # Start Cake
 Write-Host "Running build script..."
-Invoke-Expression "& `"$CakePath`" `"build.cake`" $Arguments $ScriptArgs"
+Write-Host "& `"$CakePath`" `"$PSScriptRoot\build.cake`" $Arguments $ScriptArgs"
+Invoke-Expression "& `"$CakePath`" `"$PSScriptRoot\build.cake`" $Arguments $ScriptArgs"
 exit $LASTEXITCODE

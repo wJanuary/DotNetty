@@ -8,7 +8,8 @@ namespace DotNetty.Microbench.Internal
     using DotNetty.Common.Internal;
 
     // [CoreJob]
-    [SimpleJob(RuntimeMoniker.NetCoreApp31)]
+    [SimpleJob(RuntimeMoniker.Net60)]
+    [SimpleJob(RuntimeMoniker.Net70)]
     [BenchmarkCategory("Internal")]
     public class PlatformDependentBenchmark
     {
@@ -32,5 +33,9 @@ namespace DotNetty.Microbench.Internal
         [Benchmark]
         public bool UnsafeBytesEqual() =>
             PlatformDependent.ByteArrayEquals(this.bytes1, 0, this.bytes2, 0, this.bytes1.Length);
+        
+        [Benchmark(Baseline = true)]
+        public bool UnsafeBytesEqualPtr() =>
+            PlatformDependent.ByteArrayEqualsPtr(this.bytes1, 0, this.bytes2, 0, this.bytes1.Length);
     }
 }

@@ -50,9 +50,9 @@ namespace DotNetty.Common.Tests.Internal.Logging
         {
             ILoggerFactory oldLoggerFactory = InternalLoggerFactory.DefaultFactory;
             var loggerFactory = new LoggerFactory();
-            var factoryMock = new Mock<ILoggerProvider>(MockBehavior.Strict);
+            var factoryMock = new Mock<ILoggerProvider>();
             ILoggerProvider mockFactory = factoryMock.Object;
-            loggerMock = new Mock<ILogger>(MockBehavior.Strict);
+            loggerMock = new Mock<ILogger>();
             loggerFactory.AddProvider(mockFactory);
             factoryMock.Setup(x => x.CreateLogger("mock")).Returns(loggerMock.Object);
             InternalLoggerFactory.DefaultFactory = loggerFactory;

@@ -1,0 +1,15 @@
+<Project>
+    <!-- Set common properties regarding assembly information and nuget packages -->
+    <PropertyGroup>
+        <Authors>wJanuary</Authors>
+        <Product>Netty.Net</Product>
+        <PackageIconUrl></PackageIconUrl>
+        <PackageProjectUrl>https://github.com/wJanuary/DotNettyRefreshed</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/wJanuary/DotNettyRefreshed.git</RepositoryUrl>
+        <NeutralLanguage>en-US</NeutralLanguage>
+        <IncludeSymbols>false</IncludeSymbols>
+        <IncludeSource>false</IncludeSource>
+    </PropertyGroup>
+</Project>
