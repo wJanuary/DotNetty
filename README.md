@@ -1,3 +1,16 @@
+Just some tuning to make things work with modern dotnet
+
+[![Available on NuGet https://www.nuget.org/packages?q=dotnettyrefreshed](https://img.shields.io/nuget/v/DotNettyRefreshed.Common.svg?style=flat-square)](https://www.nuget.org/packages?q=dotnettyrefreshed)
+
+- [x] .net 6,7,8 support
+- [x] Trimming support
+- [x] Some Span overload
+
+I do not guarantee that everything works, hovewer i do not push changes until every test passed.
+
+
+Original README
+---
 # DotNetty Project
 
 [![Join the chat at https://gitter.im/Azure/DotNetty](https://img.shields.io/gitter/room/Azure/DotNetty.js.svg?style=flat-square)](https://gitter.im/Azure/DotNetty?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
