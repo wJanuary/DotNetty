@@ -8,7 +8,7 @@
     <PackageId>DotNettyRefreshed.Codecs.Protobuf</PackageId>
     <Description>Protobuf Proto3 codec for DotNetty</Description>
     <AssemblyTitle>DotNetty: Protobuf Proto3 codec</AssemblyTitle>
-    <VersionPrefix>0.7.5</VersionPrefix>
+    <VersionPrefix>0.7.6</VersionPrefix>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

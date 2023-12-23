@@ -5,14 +5,14 @@
   <PropertyGroup Label="NuGet">
     <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
     <IsPackable>true</IsPackable>
-    <PackageId>DotNetty.Codecs.Mqtt</PackageId>
+    <PackageId>DotNettyRefreshed.Codecs.Mqtt</PackageId>
     <Description>MQTT codec for DotNetty</Description>
     <AssemblyTitle>DotNetty: MQTT codec</AssemblyTitle>
-    <VersionPrefix>0.7.5</VersionPrefix>
+    <VersionPrefix>0.7.6</VersionPrefix>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <AssemblyName>DotNetty.Codecs.Mqtt</AssemblyName>
+    <AssemblyName>DotNettyRefreshed.Codecs.Mqtt</AssemblyName>
     <AssemblyOriginatorKeyFile>../../DotNetty.snk</AssemblyOriginatorKeyFile>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <PackageTags>socket;tcp;protocol;netty;dotnetty;network;mqtt</PackageTags>

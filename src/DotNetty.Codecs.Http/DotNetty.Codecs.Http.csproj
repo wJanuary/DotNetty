@@ -8,7 +8,7 @@
     <PackageId>DotNettyRefreshed.Codecs.Http</PackageId>
     <Description>Http codec for DotNetty</Description>
     <AssemblyTitle>DotNetty: Http codec</AssemblyTitle>
-    <VersionPrefix>0.7.5</VersionPrefix>
+    <VersionPrefix>0.7.6</VersionPrefix>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>

@@ -21,7 +21,7 @@ namespace DotNetty.Handlers.Tls
         }
 
         public ClientTlsSettings(bool checkCertificateRevocation, List<X509Certificate> certificates, string targetHost)
-            : this(SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12, checkCertificateRevocation, certificates, targetHost)
+            : this(SslProtocols.Tls12 | SslProtocols.Tls13, checkCertificateRevocation, certificates, targetHost)
         {
         }
 

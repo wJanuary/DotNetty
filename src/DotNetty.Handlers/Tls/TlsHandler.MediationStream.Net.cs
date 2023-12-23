@@ -9,6 +9,7 @@ namespace DotNetty.Handlers.Tls
     using System.Diagnostics.Contracts;
     using System.Threading;
     using System.Threading.Tasks;
+    using DotNetty.Common.Utilities;
 
     partial class TlsHandler
     {
@@ -63,6 +64,11 @@ namespace DotNetty.Handlers.Tls
 
             ValueTask<int> InLoopReadAsync(Memory<byte> buffer, CancellationToken cancellationToken)
             {
+                if (buffer.IsEmpty)
+                {
+                    return new ValueTask<int>(0);
+                }
+                
                 if (this.SourceIsReadable)
                 {
                     // we have the bytes available upfront - write out synchronously
@@ -82,6 +88,11 @@ namespace DotNetty.Handlers.Tls
                 return this.owner.capturedContext.Executor.SubmitAsync(
                     () =>
                     {
+                        if (buffer.IsEmpty)
+                        {
+                            return Task.FromResult(0);
+                        }
+                        
                         if (this.SourceIsReadable)
                         {
                             // we have the bytes available upfront - write out synchronously
